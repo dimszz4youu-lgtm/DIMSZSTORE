@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dimszz Store - Top Up Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #222;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 { margin-top: 0; }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #00aaff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background: #008dd1; }
+        .price-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e3f6ff;
+            border-left: 5px solid #00aaff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>Dimszz Store - Top Up Game Murah</header>
+
+    <div class="container">
+        <h2>Pilih Game</h2>
+        <select id="game" onchange="updatePrices()">
+            <option value="ml">Mobile Legends</option>
+            <option value="ff">Free Fire</option>
+            <option value="pubg">PUBG Mobile</option>
+        </select>
+
+        <h2>Pilih Nominal</h2>
+        <select id="nominal"></select>
+
+        <div class="price-box" id="priceBox">Harga: -</div>
+
+        <h2>Masukkan ID Game</h2>
+        <input type="text" id="playerId" placeholder="Masukkan ID / UID" />
+
+        <h2>Pilih Metode Pembayaran</h2>
+        <select id="payment">
+            <option>QRIS</option>
+            <option>DANA</option>
+            <option>OVO</option>
+            <option>Gopay</option>
+            <option>Transfer Bank</option>
+        </select>
+
+        <button onclick="checkoutWA()">Checkout via WhatsApp</button>
+    </div>
+
+    <script>
+        const priceList = {
+            ml: {
+                "86 Diamonds": 20000,
+                "172 Diamonds": 39000,
+                "257 Diamonds": 59000,
+                "344 Diamonds": 79000
+            },
+            ff: {
+                "50 Diamonds": 8000,
+                "100 Diamonds": 15000,
+                "310 Diamonds": 45000
+            },
+            pubg: {
+                "60 UC": 15000,
+                "325 UC": 70000,
+                "660 UC": 130000
+            }
+        };
+
+        function updatePrices() {
+            const game = document.getElementById("game").value;
+            const nominal = document.getElementById("nominal");
+            nominal.innerHTML = "";
+
+            Object.keys(priceList[game]).forEach(n => {
+                const opt = document.createElement("option");
+                opt.value = n;
+                opt.textContent = n;
+                nominal.appendChild(opt);
+            });
+
+            updatePriceBox();
+        }
+
+        function updatePriceBox() {
+            const game = document.getElementById("game").value;
+            const nominal = document.getElementById("nominal").value;
+            const price = priceList[game][nominal];
+            document.getElementById("priceBox").innerText = `Harga: Rp ${price}`;
+        }
+
+        document.getElementById("nominal").addEventListener("change", updatePriceBox);
+
+        function checkoutWA() {
+            const game = document.getElementById("game").value;
+            const nominal = document.getElementById("nominal").value;
+            const playerId = document.getElementById("playerId").value;
+            const payment = document.getElementById("payment").value;
+            const price = priceList[game][nominal];
+
+            if (!playerId) {
+                alert("ID wajib diisi!");
+                return;
+            }
+
+            const msg = `Halo, saya ingin top up:%0A` +
+                        `Game: ${game}%0A` +
+                        `Nominal: ${nominal}%0A` +
+                        `ID: ${playerId}%0A` +
+                        `Pembayaran: ${payment}%0A` +
+                        `Harga: Rp ${price}`;
+
+            window.open(`https://wa.me/6281234567890?text=${msg}`);
+        }
+
+        updatePrices();
+    </script>
+</body>
+</html>
