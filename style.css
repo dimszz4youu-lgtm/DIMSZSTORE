@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #111;
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+}
+
+.games {
+    padding: 20px;
+}
+
+.game-list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.game-card {
+    width: 120px;
+    padding: 10px;
+    background: #222;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game-card:hover {
+    background: #333;
+}
+
+.game-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.form {
+    padding: 20px;
+    background: #222;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    padding: 10px;
+    width: 100%;
+    background: #00aaff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+.hide {
+    display: none;
+}
